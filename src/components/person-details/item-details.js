@@ -5,13 +5,26 @@ import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
 import ErrorButton from "../error-button";
 
+const Record = ({ item, field, label }) => {
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}</span>
+      <span>{field}</span>
+    </li>
+  );
+};
+
+export {
+  Record
+}
+
 export default class PersonDetails extends Component {
   swapiService = new SwapiService();
 
   state = {
     person: null,
     loading: true,
-    image: null
+    image: null,
   };
 
   componentDidMount() {
@@ -20,20 +33,20 @@ export default class PersonDetails extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.personId !== prevProps.personId) {
-      this.setState({ loading: true })
+      this.setState({ loading: true });
       this.updatePerson();
     }
   }
 
-  onPersonLoaded = person => {
-    const { getImageUrl } = this.props
+  onPersonLoaded = (person) => {
+    const { getImageUrl } = this.props;
 
     this.setState({
       person,
       loading: false,
-      image: getImageUrl(person)
-    })
-  }
+      image: getImageUrl(person),
+    });
+  };
 
   updatePerson() {
     const { personId, getData } = this.props;
@@ -42,52 +55,44 @@ export default class PersonDetails extends Component {
       return;
     }
 
-    getData(personId)
-      .then(this.onPersonLoaded)
-
+    getData(personId).then(this.onPersonLoaded);
   }
 
   render() {
     const { person, loading, image } = this.state;
+    console.log(this.props.children)
 
     if (!person) {
       return <span>Select a person from a list!</span>;
     }
 
-    const content = loading ? <Spinner /> : <PersonView person={person} image={image}/>;
-
-    return (
-      <div className="person-details card">
-        {content}
-      </div>
+    const content = loading ? (
+      <Spinner />
+    ) : (
+      <PersonView person={person} image={image} children={this.props.children} />
     );
+
+    return <div className="person-details card">{content}</div>;
   }
 }
 
-const PersonView = ({ person: { id, name, gender, birthYear, eyeColor }, image }) => {
+const PersonView = ({
+  person,
+  image,
+  children
+}) => {
   return (
     <React.Fragment>
-      <img
-        className="person-image"
-        src={image}
-        alt="character"
-      />
+      <img className="person-image" src={image} alt="character" />
 
       <div className="card-body">
-        <h4>{name}</h4>
+        <h4>{person.name}</h4>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{eyeColor}</span>
-          </li>
+          {
+            React.Children.map(children, (child, idx) => {
+              return child
+            })
+          }
         </ul>
         <div className="row mb2 button-row">
           <ErrorButton />

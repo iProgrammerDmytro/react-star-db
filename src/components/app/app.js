@@ -6,7 +6,7 @@ import ErrorButton from "../error-button";
 import ErrorIndicator from "../error-indicator";
 import PeoplePage from "../people-page";
 import ItemList from "../item-list/item-list";
-import PersonDetails from "../person-details/item-details";
+import PersonDetails, { Record } from "../person-details/item-details";
 
 import "./app.css";
 import SwapiService from "../../services/swapi-service";
@@ -37,16 +37,28 @@ export default class App extends Component {
       return <ErrorIndicator />;
     }
 
-    const { getPerson, getStarship, getPersonImage, getStarshipImage } = this.swapiService
+    const { getPerson, getStarship, getPersonImage, getStarshipImage } =
+      this.swapiService;
 
     const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
 
     const personDetails = (
-      <PersonDetails getData={getPerson} getImageUrl={getPersonImage} personId={11} />
+      <PersonDetails
+        getData={getPerson}
+        getImageUrl={getPersonImage}
+        personId={11}
+      >
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </PersonDetails>
     );
 
     const starshipDetails = (
-      <PersonDetails getData={getStarship} personId={5} getImageUrl={getStarshipImage} />
+      <PersonDetails
+        getData={getStarship}
+        personId={5}
+        getImageUrl={getStarshipImage}
+      />
     );
 
     return (
