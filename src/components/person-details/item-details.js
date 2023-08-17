@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./person-details.css";
+import "./item-details.css";
 import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
 import ErrorButton from "../error-button";
@@ -11,6 +11,7 @@ export default class PersonDetails extends Component {
   state = {
     person: null,
     loading: true,
+    image: null
   };
 
   componentDidMount() {
@@ -25,32 +26,35 @@ export default class PersonDetails extends Component {
   }
 
   onPersonLoaded = person => {
+    const { getImageUrl } = this.props
+
     this.setState({
       person,
-      loading: false
+      loading: false,
+      image: getImageUrl(person)
     })
   }
 
   updatePerson() {
-    const { personId } = this.props;
+    const { personId, getData } = this.props;
 
     if (!personId) {
       return;
     }
 
-    this.swapiService.getPerson(personId)
+    getData(personId)
       .then(this.onPersonLoaded)
 
   }
 
   render() {
-    const { person, loading } = this.state;
+    const { person, loading, image } = this.state;
 
     if (!person) {
       return <span>Select a person from a list!</span>;
     }
 
-    const content = loading ? <Spinner /> : <PersonView person={person} />;
+    const content = loading ? <Spinner /> : <PersonView person={person} image={image}/>;
 
     return (
       <div className="person-details card">
@@ -60,12 +64,12 @@ export default class PersonDetails extends Component {
   }
 }
 
-const PersonView = ({ person: { id, name, gender, birthYear, eyeColor } }) => {
+const PersonView = ({ person: { id, name, gender, birthYear, eyeColor }, image }) => {
   return (
     <React.Fragment>
       <img
         className="person-image"
-        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+        src={image}
         alt="character"
       />
 
