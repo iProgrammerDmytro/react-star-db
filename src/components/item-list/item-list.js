@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './item-list.css';
 
-const ItemList = props => {
+const ItemList = (props) => {
 
-  const { data, onItemSelected, children } = props
-  const items = data.map(item => {
-    const { id } = item
-    const label = children(item)
+  const { data, onItemSelected, children: renderLabel } = props;
+
+  const items = data.map((item) => {
+    const { id } = item;
+    const label = renderLabel(item);
 
     return (
       <li className="list-group-item"
@@ -16,13 +17,13 @@ const ItemList = props => {
         {label}
       </li>
     );
-  })
+  });
 
   return (
     <ul className="item-list list-group">
       {items}
     </ul>
   );
-  }
+};
 
-export default ItemList
+export default ItemList;

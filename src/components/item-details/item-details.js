@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import ErrorButton from '../error-button/error-button';
-import SwapiService from '../../services/swapi-service';
 
 import './item-details.css';
 
@@ -18,10 +17,7 @@ export {
   Record
 };
 
-
 export default class ItemDetails extends Component {
-
-  swapiService = new SwapiService();
 
   state = {
     item: null,

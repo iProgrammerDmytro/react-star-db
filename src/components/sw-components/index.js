@@ -2,13 +2,13 @@ import {
   PersonDetails,
   PlanetDetails,
   StarshipDetails
-} from './details'
+} from './details';
 
 import {
   PersonList,
   PlanetList,
   StarshipList
-} from './item-list'
+} from './item-lists';
 
 export {
   PersonDetails,
@@ -17,4 +17,4 @@ export {
   PersonList,
   PlanetList,
   StarshipList
-}
+};
