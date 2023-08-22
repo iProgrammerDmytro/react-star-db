@@ -28,9 +28,8 @@ const PlanetDetails = ({ itemId }) => {
         getData={getPlanet}
         getImageUrl={getPlanetImage}
       >
-        <Record field="model" label="Model" />
-        <Record field="length" label="Length" />
-        <Record field="costInCredits" label="Cost" />
+        <Record field="rotationPeriod" label="Rotation period" />
+        <Record field="diameter" label="Diameter" />
       </ItemDetails>
   )
 }
