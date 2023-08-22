@@ -4,12 +4,19 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorBoundry from "../error-boundry";
 
-import Row from "../row/row";
 import ItemDetails, { Record } from "../item-details/item-details";
 import SwapiService from "../../services/swapi-service";
 
 import "./app.css";
-import ItemList from "../item-list/item-list";
+
+import {
+  PersonDetails,
+  PersonList,
+  PlanetDetails,
+  PlanetList,
+  StarshipDetails,
+  StarshipList
+} from '../sw-components'
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -57,15 +64,24 @@ export default class App extends Component {
           <div className="stardb-app">
             <Header />
 
-            <Row left={personDetails} right={starshipDetails} />
+            <PersonDetails itemId={11} />
+
+            <PlanetDetails itemId={8} />
+
+            <StarshipDetails itemId={5} />
+
+            <PersonList>
+              { ({name}) => <span>{name}</span> }
+            </PersonList>
+            <StarshipList>
+              { ({name}) => <span>{name}</span> }
+            </StarshipList>
+            <PlanetList>
+              { ({name}) => <span>{name}</span> }
+            </PlanetList>
+
           </div>
         </ErrorBoundry>
-        <ItemList
-          getData={this.swapiService.getAllPeople}
-          onItemSelected={() => {}}
-        >
-          {({name}) => <span>{name}</span>}
-        </ItemList >
       </React.Fragment>
     );
   }
