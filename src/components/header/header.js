@@ -1,14 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import './header.css';
+import "./header.css";
 
-const Header = () => {
+const Header = ({ onServiceChange }) => {
   return (
     <div className="header d-flex">
       <h3>
-        <a href="#/">
-          StarDB
-        </a>
+        <a href="#/">StarDB</a>
       </h3>
       <ul className="d-flex">
         <li>
@@ -21,6 +19,9 @@ const Header = () => {
           <a href="#/starships">Starships</a>
         </li>
       </ul>
+      <button className="btn btn-primary btn-sm" onClick={onServiceChange}>
+        Change service
+      </button>
     </div>
   );
 };
