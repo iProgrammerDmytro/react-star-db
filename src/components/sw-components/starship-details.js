@@ -1,4 +1,3 @@
-import { SwapiServiceConsumer } from "../swapi-service-context";
 import { Record } from "../item-details";
 import ItemDetails from "../item-details";
 import { withSwapiService } from "../hoc-helpers";
@@ -20,4 +19,4 @@ const mapMethodsToProps = swapiService => {
   }
 }
 
-export default withSwapiService(StarshipDetails, mapMethodsToProps);
+export default withSwapiService(mapMethodsToProps)(StarshipDetails);
